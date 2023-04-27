@@ -1,0 +1,16 @@
+name: Build
+on: [push]
+jobs:
+  linux:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: bazelbuild/setup-bazelisk@v2
+    - run: bazel build :rules_go_windows_bug
+  windows:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: bazelbuild/setup-bazelisk@v2
+    - run: bazel build :rules_go_windows_bug
+      shell: bash
