@@ -1,0 +1,29 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+load("@bazel_gazelle//:def.bzl", "gazelle")
+
+# gazelle:prefix github.com/bluec0re/rules_go_windows_bug
+gazelle(name = "gazelle")
+
+gazelle(
+    name = "gazelle-update-repos",
+    args = [
+        "-from_file=go.mod",
+        "-to_macro=deps.bzl%go_dependencies",
+        "-prune",
+    ],
+    command = "update-repos",
+)
+
+go_library(
+    name = "rules_go_windows_bug_lib",
+    srcs = ["main.go"],
+    importpath = "github.com/bluec0re/rules_go_windows_bug",
+    visibility = ["//visibility:private"],
+    deps = ["@org_golang_x_oauth2//:oauth2"],
+)
+
+go_binary(
+    name = "rules_go_windows_bug",
+    embed = [":rules_go_windows_bug_lib"],
+    visibility = ["//visibility:public"],
+)
