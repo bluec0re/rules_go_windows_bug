@@ -7,10 +7,19 @@ jobs:
     - uses: actions/checkout@v3
     - uses: bazelbuild/setup-bazelisk@v2
     - run: bazel build :rules_go_windows_bug
-  windows:
+  windows_fails:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v3
     - uses: bazelbuild/setup-bazelisk@v2
+    - run: bazel build :rules_go_windows_bug
+      shell: bash
+  windows_works:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: bazelbuild/setup-bazelisk@v2
+    - run: bazel build @org_golang_x_oauth2//:oauth2
+      shell: bash
     - run: bazel build :rules_go_windows_bug
       shell: bash
